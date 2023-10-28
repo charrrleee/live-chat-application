@@ -5,12 +5,12 @@ import { initializeApp } from "firebase/app";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: process.env.FIREBASE_API_KEY,
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: "live-chat-application-df0dd.firebaseapp.com",
   projectId: "live-chat-application-df0dd",
   storageBucket: "live-chat-application-df0dd.appspot.com",
-  messagingSenderId: process.env.FIREBASE_MSG_ID,
-  appId: process.env.FIREBASE_APP_ID,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MSG_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
 
 // Initialize Firebase
