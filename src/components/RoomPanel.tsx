@@ -40,12 +40,12 @@ const RoomPanel: React.FC = () => {
 
   return (
     <div>
-      <div className="flex-1 p-4 overflow-y-auto basis-3/5 bg-blue-400">
+      <div className="p-4">
         <div>
           {chatrooms.map((room: Chatroom, idx: number) => (
             <Link to={`chatroom/${room.id}`} key={idx}>
               <Button
-                className={"m-3 w-30"}
+                className={"m-3 w-30 btn-dark"}
                 key={idx}
                 onClick={handleOnClickChatRoom}
               >

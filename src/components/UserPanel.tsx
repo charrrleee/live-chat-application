@@ -18,7 +18,7 @@ const UserPanel: React.FC = () => {
   }, []);
 
   return (
-    <div>
+    <div className="p-3">
       {users.map((user: User, idx: number) => (
         <UserCard user={user} key={idx} />
       ))}

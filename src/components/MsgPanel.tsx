@@ -48,15 +48,15 @@ const ChatPanel: React.FC = () => {
       throw "";
     }
 
-    const unsubscribe = fsMessages.listMessages(roomId, handleListMessage);
+    fsMessages.listMessages(roomId, handleListMessage);
     setRoomName(roomName);
     return () => {
-      unsubscribe();
+      // unsubscribe();
     };
   }, []);
 
   return (
-    <div className="d-flex h-100 flex-column justify-content-between">
+    <div className="d-flex h-100 flex-column justify-content-between m-1">
       <div>
         <div className="row-10">
           <span>{roomName}</span>
@@ -68,15 +68,18 @@ const ChatPanel: React.FC = () => {
         </div>
       </div>
       {user.email !== "" && (
-        <Form className="form-group row" onSubmit={handleTextOnSubmit}>
+        <Form
+          className="form-group d-flex flex-row align-items-center justify-content-center"
+          onSubmit={handleTextOnSubmit}
+        >
           <input
             type="text"
-            className="form-control col-1"
+            className="form-control"
             placeholder="Type ur msg here"
             onChange={(e) => handleTextOnChange(e)}
             value={msg!.text}
           />
-          <Button type="submit" className="btn-primary mb-2 col-2">
+          <Button type="submit" className="btn-dark m-2">
             Submit
           </Button>
         </Form>

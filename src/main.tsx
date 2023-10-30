@@ -8,7 +8,6 @@ import ChatPanel from "./components/MsgPanel.tsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ErrorPage from "./components/ErrorPage.tsx";
 import { Provider } from "react-redux";
-import { createStore } from "redux";
 import { store } from "./redux/store.tsx";
 
 const router = createBrowserRouter([

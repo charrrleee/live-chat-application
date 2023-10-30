@@ -35,17 +35,17 @@ const NavMenu: React.FC = () => {
   };
 
   return (
-    <div className="d-flex flex-column col justify-content-between align-items-center align-self-center">
-      <Link to={"/"} className="text-dark">
+    <div className="d-flex flex-column text-white justify-content-between align-items-center align-self-center vh-100">
+      <Link to={"/"} className="text-white mt-5">
         Chat Room
       </Link>
       <div className="p-4">
         {isLogin ? (
-          <Button className="" onClick={logoutFromGoogle}>
+          <Button className="btn-dark" onClick={logoutFromGoogle}>
             Logout
           </Button>
         ) : (
-          <Button className="" onClick={loginToGoogle}>
+          <Button className="btn-light" onClick={loginToGoogle}>
             Login
           </Button>
         )}

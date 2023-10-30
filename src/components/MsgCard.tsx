@@ -11,12 +11,14 @@ const MsgCard: React.FC<MsgCardProps> = (props: MsgCardProps) => {
   return (
     <div
       key={props.msg.username}
-      className={`d-flex p-3 flex-column ${
-        user.email == props.msg.email ? "align-items-end " : "align-items-start"
+      className={`d-flex p-3 flex-column m-1 rounded ${
+        user.email == props.msg.email
+          ? "align-items-end bg-secondary"
+          : "align-items-start bg-dark text-white"
       }`}
     >
+      <span className="h">{props.msg.text}</span>
       <span>{props.msg.username}</span>
-      <span>{props.msg.text}</span>
     </div>
   );
 };

@@ -4,14 +4,14 @@ import { Outlet } from "react-router";
 
 const App = () => {
   return (
-    <div className="flex row heigh-100">
-      <div className="col-2 bg-primary">
+    <div className="row vh-100 vw-100 rounded rounded-lg">
+      <div className="col-2 bg-dark text-white">
         <NavMenu />
       </div>
-      <div className="col-8 bg-secondary">
+      <div className="col-6 bg-light">
         <Outlet />
       </div>
-      <div className="col-2 bg-success">
+      <div className="col-4 bg-dark text-white">
         <UserPanel />
       </div>
     </div>

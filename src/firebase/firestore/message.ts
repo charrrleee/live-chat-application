@@ -1,5 +1,4 @@
 import {
-  Unsubscribe,
   addDoc,
   collection,
   getFirestore,
@@ -19,14 +18,13 @@ const createMessage = async (name: string, msg: Message) => {
 const listMessages = (
   name: string,
   handleListMessage: (msgs: Message[]) => void,
-): Unsubscribe => {
-  
+) => {
   const db = getFirestore(app);
   const col = collection(db, "chatrooms", name, "message");
   const q = query(col, orderBy("createdTime"));
 
   // todo snapshot // subscribtion
-  const unsubscribe: Unsubscribe = onSnapshot(q, (snapshot) => {
+  onSnapshot(q, (snapshot) => {
     const msgs = snapshot.docs.map((doc) => {
       const row = doc.data();
       const msg: Message = {
@@ -38,7 +36,6 @@ const listMessages = (
       return msg;
     });
     handleListMessage(msgs);
-    return unsubscribe;
   });
 };
 
