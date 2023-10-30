@@ -4,7 +4,7 @@ import { Outlet } from "react-router";
 
 const App = () => {
   return (
-    <div className="flex row m-auto h-100 w-100">
+    <div className="flex row heigh-100">
       <div className="col-2 bg-primary">
         <NavMenu />
       </div>

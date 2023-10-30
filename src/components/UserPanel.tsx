@@ -1,36 +1,19 @@
-import { collection, getDocs, getFirestore } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import app from "../firebase.config";
-import utils from "../utils/date";
 import User from "../types/User";
 import UserCard from "./UserCard";
+import fsUser from "../firebase/firestore/user";
 
 const UserPanel: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
 
-  const listUsers = async () => {
-    console.log("run listUsers");
-    const db = getFirestore(app);
-    const userCol = collection(db, "users");
-    const snapshot = await getDocs(userCol);
-    setUsers(
-      snapshot.docs.map((doc) => {
-        const date = doc.data().lastSeen.toDate();
-        const user: User = {
-          name: doc.data().name,
-          email: doc.data().email,
-          lastSeen: utils.formatDate(date),
-        };
-        console.log(user);
-        return user;
-      }),
-    );
+  const handleListUser = (fbUsers: User[]) => {
+    setUsers(fbUsers);
   };
 
   useEffect(() => {
-    console.log("run");
+    const unsubscribe = fsUser.listUser(handleListUser);
     return () => {
-      listUsers();
+      unsubscribe();
     };
   }, []);
 

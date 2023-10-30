@@ -4,13 +4,12 @@ import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
 import { useState } from "react";
 
 interface FormDialogProps {
   open: boolean;
   handleOpen: (open: boolean) => void;
+  handleChange: (name: string) => void;
   handleSubmit: (name: string) => void;
 }
 
@@ -22,7 +21,9 @@ const FormDialog: React.FC<FormDialogProps> = (props: FormDialogProps) => {
   };
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setName(e.target.value);
+    const name = e.target.value;
+    setName(name);
+    props.handleChange(name);
   };
 
   const handleOnSubmit = () => {

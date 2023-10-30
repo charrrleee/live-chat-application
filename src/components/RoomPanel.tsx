@@ -1,101 +1,71 @@
-import {
-  getFirestore,
-  setDoc,
-  doc,
-  addDoc,
-  collection,
-  getDocs,
-} from "firebase/firestore";
-import app from "../firebase.config";
 import FormDialog from "./FormDialog";
 import { Button } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import utils from "../utils/date";
 import { Link } from "react-router-dom";
-
-interface Chatroom {
-  name: string;
-  createdTime: string;
-}
+import { RootState } from "../redux/store";
+import { useSelector } from "react-redux";
+import fsChatRoom from "../firebase/firestore/chatroom";
 
 const RoomPanel: React.FC = () => {
   const [chatroomName, setChatroomName] = useState("");
   const [chatrooms, setChatrooms] = useState<Chatroom[]>([]);
-
   const [open, setOpen] = useState(false);
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setChatroomName(event.target.value);
-  };
+  const user = useSelector((state: RootState) => state.user);
 
-  const handleSubmitChatRoomName = (name: string) => {
-    console.log(name, "name test");
-    setOpen(false);
-    // todo add chatroom to firebase
+  const handleOnChangeChatRoom = (name: string) => {
+    setChatroomName(name);
   };
 
   const handleOnClickChatRoom = () => {
-    // todo pass the name to ChatPanel
+    localStorage.setItem("room", chatroomName);
   };
 
-  const listChatrooms = async () => {
-    console.log("run listChatrooms");
-    const db = getFirestore(app);
-    const userCol = collection(db, "chatrooms");
-    const snapshot = await getDocs(userCol);
-    setChatrooms(
-      snapshot.docs.map((doc) => {
-        const date = doc.data().createdTime.toDate();
-        const chatroom: Chatroom = {
-          name: doc.data().name,
-          createdTime: utils.formatDate(date),
-        };
-        console.log(chatroom);
-        return chatroom;
-      }),
-    );
+  const handleSubmitChatRoomName = async (name: string) => {
+    console.log(name, "name test");
+    await fsChatRoom.createChatroom(chatroomName);
+    setOpen(false);
+  };
+
+  const handleListChatroom = (chatrooms: Chatroom[]) => {
+    setChatrooms(chatrooms);
   };
 
   useEffect(() => {
-    console.log("run listChatrooms");
+    const unsubscribe = fsChatRoom.listChatroom(handleListChatroom);
     return () => {
-      listChatrooms();
+      unsubscribe();
     };
   }, []);
-
-  const createChatRoom = async () => {
-    console.log(`createChatRoom run`);
-    const db = getFirestore(app);
-    const chatroomsCol = collection(db, "chatrooms");
-    await addDoc(chatroomsCol, {
-      name: chatroomName,
-      createdTime: new Date(),
-    });
-  };
 
   return (
     <div>
       <div className="flex-1 p-4 overflow-y-auto basis-3/5 bg-blue-400">
         <div>
           {chatrooms.map((room: Chatroom, idx: number) => (
-            <Link to={`chatroom/${room.name}`} key={idx}>
+            <Link to={`chatroom/${room.id}`} key={idx}>
               <Button
                 className={"m-3 w-30"}
                 key={idx}
-                onClick={() => handleOnClickChatRoom(room.name)}
+                onClick={handleOnClickChatRoom}
               >
-                {room.name}
+                <div>{room.name}</div>
+                <div>{utils.formatDate(room.createdTime)}</div>
               </Button>
             </Link>
           ))}
         </div>
-        <Button className={"m-3 w-30"} onClick={() => setOpen(true)}>
-          {"+"}
-        </Button>
+        {user.email !== "" && (
+          <Button className={"m-3 w-30"} onClick={() => setOpen(true)}>
+            {"+"}
+          </Button>
+        )}
       </div>
       {open && (
         <FormDialog
           open={true}
           handleOpen={setOpen}
+          handleChange={(name) => handleOnChangeChatRoom(name)}
           handleSubmit={(name) => handleSubmitChatRoomName(name)}
         />
       )}
