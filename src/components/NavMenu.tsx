@@ -29,7 +29,7 @@ const NavMenu: React.FC = () => {
   const logoutFromGoogle = async () => {
     const success = await auth.logout();
     if (success) {
-      dispatch(logout({}));
+      dispatch(logout());
       setIsLogin(false);
     }
   };

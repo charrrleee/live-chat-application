@@ -29,7 +29,7 @@ const login = async (): Promise<User> => {
       const user: User = {
         email: email,
         name: name,
-        lastSeen: Date.now(),
+        lastSeen: new Date,
       };
       return user;
       // dispatch(reduxLogin({email: user.email, name: user.displayName}))
@@ -46,7 +46,7 @@ const login = async (): Promise<User> => {
       const user: User = {
         email: "",
         name: "",
-        lastSeen: Date.now(),
+        lastSeen: new Date,
       };
       return user;
     });
