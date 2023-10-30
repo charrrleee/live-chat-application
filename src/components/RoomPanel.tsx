@@ -56,7 +56,7 @@ const RoomPanel: React.FC = () => {
           ))}
         </div>
         {user.email !== "" && (
-          <Button className={"m-3 w-30"} onClick={() => setOpen(true)}>
+          <Button className={"m-3 w-30 btn-dark"} onClick={() => setOpen(true)}>
             {"+"}
           </Button>
         )}
